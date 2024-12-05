@@ -1,58 +1,47 @@
 import pandas as pd
 from datetime import datetime, timedelta
+import random
 
-# Define starting and ending dates for random start date generation
-today = datetime.today()
-three_years_ago = today - timedelta(days=365 * 3)
-
-# Define function to generate random phone number (10 digits)
 def generate_phone():
   return f"{random.randint(100, 999)}{random.randint(1000000, 9999999)}"
 
-# Define function to generate random email
-def generate_email(name, domain="example.com"):
-  return f"{name.lower()}.{random.randint(100, 999)}@{domain}"
+def generate_email(name, domain="gmail.com"):
+  return f"{name.lower().replace(' ', '')}{random.randint(100, 999)}@{domain}"
 
-# Define function to generate random address
-def generate_address():
-  street_num = random.randint(1, 1000)
-  street_name = f"{random.choice(['Main', 'Elm', 'Maple', 'Oak'])} St"
-  city = f"City-{random.randint(100, 999)}"
-  return f"{street_num} {street_name}, {city}"
+def generate_indian_address():
+  states = ["Maharashtra", "Tamil Nadu", "Karnataka", "Gujarat", "Uttar Pradesh", "West Bengal", "Andhra Pradesh", "Telangana", "Bihar", "Madhya Pradesh"]
+  cities = ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Surat", "Jaipur"]
+  state = random.choice(states)
+  city = random.choice(cities)
+  street_num = random.randint(1, 100)
+  street_name = random.choice(["Main Road", "MG Road", "Park Street", "Sarat Bose Road", "Tilak Road"])
+  area = random.choice(["Andheri", "Bandra", "Koramangala", "HSR Layout", "Indiranagar"])
+  return f"{street_num} {street_name}, {area}, {city}, {state}"
 
-# Import libraries for random data generation (optional)
-import random
+def generate_company_name():
+  company_prefixes = ["Tech", "Corp", "Inc", "Solutions", "Systems", "Global", "International", "Limited", "Group", "Enterprise", "Digital", "Innovative", "Creative", "Smart", "Future"]
+  company_suffixes = ["Solutions", "Technologies", "Services", "Consulting", "Industries", "Group", "Corporation", "Limited", "Enterprise", "Partners"]
+  prefix = random.choice(company_prefixes)
+  suffix = random.choice(company_suffixes)
+  return f"{prefix} {suffix}"
 
-# Create empty DataFrame
+today = datetime.today()
+three_years_ago = today - timedelta(days=365 * 3)
+
 df = pd.DataFrame(columns=["Name", "Company", "Phone", "Email", "Address", "Start Date", "Renewal Date"])
 
-# Loop to generate 500 rows
-for i in range(10):
-  # Generate random names
-  first_name = f"Name-{i+1}"
-  last_name = random.choice(["Smith", "Johnson", "Williams", "Brown", "Jones"])
+for i in range(500):
+  first_name = random.choice(["Raj", "Veer", "Arjun", "Aditya", "Krishna", "Vikram"])
+  last_name = random.choice(["Kumar", "Verma", "Kapoor", "Sharma", "Singh", "Mishra", "Pichai", "Nadar"])
   name = f"{first_name} {last_name}"
-  
-  # Generate random company name
-  company = f"Company-{random.randint(1000, 9999)}"
-
-  # Generate random phone number
+  company = generate_company_name()
   phone = generate_phone()
-
-  # Generate random email
   email = generate_email(name)
-
-  # Generate random address
-  address = generate_address()
-
-  # Generate random start date within the specified range
+  address = generate_indian_address()
   start_date = random.choice(pd.date_range(three_years_ago, today))
+  renewal_date = start_date + timedelta(days=330)
 
-  # Calculate renewal date (11 months from start date)
-  renewal_date = start_date + timedelta(days=330)  # 11 months
-
-  # Create a Series with the generated data
-  data = pd.Series({
+  data = {
       "Name": name,
       "Company": company,
       "Phone": phone,
@@ -60,13 +49,8 @@ for i in range(10):
       "Address": address,
       "Start Date": start_date.strftime("%d-%m-%Y"),
       "Renewal Date": renewal_date.strftime("%d-%m-%Y")
-  })
+  }
 
-  # Append the Series to the DataFrame
-  # df = df.append(data, ignore_index=True)
-  df = pd.concat([df, data], ignore_index=True)
+  df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
 
 df.to_csv('generated_data.csv', index=False)
-
-# Print the DataFrame (optional)
-print(df.head())
