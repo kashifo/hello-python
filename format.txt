@@ -1,0 +1,25 @@
+{
+"companyName": "Acme Inc.",
+"CIN": "U1234567ABCDE12345",
+"GSTIN": "ABCDE12345XYZ12",
+"phone": "2345678900",
+"email": "info@acme.com",
+"address": "123 Business Street, Springfield, USA",
+"startDate": "2022-09-04",
+"renewalDate": "2024-09-04",
+"category": "Advertising",
+"directors": ["67905466", "52033951"],
+"description": "involved in media and print ads",
+"status": "active",
+}
+
+{
+  "din": "director1",
+  "name": "John Doe",
+  "phone": "+1-123-456-7890",
+  "email": "johndoe@acme.com",
+  "address": "456 Elm Street, Springfield, USA",
+  "aadhar": "1234-5678-9012",
+  "pan": "ABCDE1234F"
+}
+
