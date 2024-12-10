@@ -47,10 +47,10 @@ for i in range(500):
       "Phone": phone,
       "Email": email,
       "Address": address,
-      "Start Date": start_date.strftime("%d-%m-%Y"),
-      "Renewal Date": renewal_date.strftime("%d-%m-%Y")
+      "Start Date": start_date.strftime("%Y-%m-%d"),
+      "Renewal Date": renewal_date.strftime("%Y-%m-%d"),
   }
 
   df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
 
-df.to_csv('generated_data.csv', index=False)
+df.to_csv('generated_data_ymd.csv', index=False)
